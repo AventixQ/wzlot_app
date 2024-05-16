@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:w_zlot/app_bar.dart';
+import 'package:w_zlot/drawer.dart';
 import 'package:w_zlot/fire_animation.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -47,104 +50,46 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         });
       },
-    child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          //padding: EdgeInsets.zero,
-          children: <Widget>[
-            SizedBox(
-              height: 64,
-              child: DrawerHeader(
-                child: Text(
-                  'Menu',
-                  style: TextStyle(fontWeight: FontWeight.w700,),
-                  ),
-                decoration: BoxDecoration(
-                  color: Colors.orangeAccent,
-                ),
+      child: Scaffold(
+        appBar: MainAppBar(title: "wZlot"),
+        drawer: MainDrawer(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'Wędrowniku!',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
               ),
-            ),
-            ListTile(
-              title: Text('Historia wZlotu'),
-              onTap: () {
-                // TODO: funkcja dla Opcji
-              },
-            ),
-            ListTile(
-              title: Text('Mapa wydarzenia'),
-              onTap: () {
-                // TODO: funkcja dla Opcji
-              },
-            ),
-            ListTile(
-              title: Text('Harmonogram atrakcji'),
-              onTap: () {
-                // TODO: funkcja dla Opcji
-              },
-            ),
-            ListTile(
-              title: Text('Zapisz się na swoje zajęcia'),
-              onTap: () {
-                // TODO: funkcja dla Opcji
-              },
-            ),
-            ListTile(
-              title: Text('Pochwal się znajomym!'),
-              onTap: () {
-                // TODO: funkcja dla Opcji
-              },
-            ),
-            ListTile(
-              title: Text('Poznaj inne drużyny'),
-              onTap: () {
-                // TODO: funkcja dla Opcji
-              },
-            ),
-          ],
+              const Text(
+                'Witamy ciebie w oficjalnej aplikacji wZlotowej',
+              ),
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: _showAnimation
+                          ? BouncingImage()
+                          : Image.asset("images\\fire.png"),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: _showAnimation ? BlinkingSparkles() : Container(),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Image.asset(
+                          "images\\wood.png"), // Dodaj grafikę wood tutaj
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            const Text(
-              'Wędrowniku!',
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
-            ),
-            const Text(
-              'Witamy ciebie w oficjalnej aplikacji wZlotowej',
-            ),
-          Expanded(
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _showAnimation
-                    ? BouncingImage()
-                    : Image.asset("images\\fire.png"),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _showAnimation
-                    ? BlinkingSparkles()
-                    : Container(),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset("images\\wood.png"), // Dodaj grafikę wood tutaj
-                ),
-              ],
-            ),
-          )
-
-          ],
-        ),
-      ),
-    ),);
+    );
   }
 }
