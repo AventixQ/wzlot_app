@@ -14,7 +14,7 @@ void navigateWithAnimation(BuildContext context, Widget destination) {
     PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => destination,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = Offset(-1.0, 0.0);
+        var begin = const Offset(-1.0, 0.0);
         var end = Offset.zero;
         var curve = Curves.ease;
 
@@ -31,79 +31,81 @@ void navigateWithAnimation(BuildContext context, Widget destination) {
 
 
 class MainDrawer extends StatelessWidget {
+  const MainDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         //padding: EdgeInsets.zero,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 64,
             child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.orangeAccent,
+              ),
               child: Text(
                 'Menu',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              decoration: BoxDecoration(
-                color: Colors.orangeAccent,
-              ),
             ),
           ),
           ListTile(
-            title: Text('Strona główna'),
+            title: const Text('Strona główna'),
             onTap: () {
-              navigateWithAnimation(context, MyHomePage(title: "Strona główna")
+              navigateWithAnimation(context, const MyHomePage(title: "Strona główna")
               );
             },
           ),
           ListTile(
-            title: Text('Historia wZlotu'),
+            title: const Text('Historia wZlotu'),
             onTap: () {
-              navigateWithAnimation(context, HistoryPage()
+              navigateWithAnimation(context, const HistoryPage()
               );
             },
           ),
           ListTile(
-            title: Text('Mapa wydarzenia'),
+            title: const Text('Mapa wydarzenia'),
             onTap: () {
-              navigateWithAnimation(context, MapPage()
+              navigateWithAnimation(context, const MapPage()
               );
             },
           ),
           ListTile(
-            title: Text('Harmonogram atrakcji'),
+            title: const Text('Harmonogram atrakcji'),
             onTap: () {
-              navigateWithAnimation(context, TimetablePage()
+              navigateWithAnimation(context, const TimetablePage()
               );
             },
           ),
           ListTile(
-            title: Text('Zapisz się na swoje zajęcia'),
+            title: const Text('Zapisz się na swoje zajęcia'),
             onTap: () {
-              navigateWithAnimation(context, RegistrationPage()
+              navigateWithAnimation(context, const RegistrationPage()
               );
             },
           ),
           ListTile(
-            title: Text('Pochwal się znajomym!'),
+            title: const Text('Pochwal się znajomym!'),
             onTap: () {
-              navigateWithAnimation(context, SharePage()
+              navigateWithAnimation(context, const SharePage()
               );
             },
           ),
           ListTile(
-            title: Text('Poznaj inne drużyny'),
+            title: const Text('Poznaj inne drużyny'),
             onTap: () {
-              navigateWithAnimation(context, TeamsPage()
+              navigateWithAnimation(context, const TeamsPage()
               );
             },
           ),
           ListTile(
-            title: Text('Komenda wZlotu 2024'),
+            title: const Text('Komenda wZlotu 2024'),
             onTap: () {
-              navigateWithAnimation(context, OrganizersPage()
+              navigateWithAnimation(context, const OrganizersPage()
               );
             },
           ),

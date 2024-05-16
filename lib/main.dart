@@ -1,9 +1,13 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:w_zlot/app_bar.dart';
 import 'package:w_zlot/drawer.dart';
 import 'package:w_zlot/fire_animation.dart';
 
-void main() {
+late List<CameraDescription> cameras;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
 
@@ -51,8 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       },
       child: Scaffold(
-        appBar: MainAppBar(title: "wZlot"),
-        drawer: MainDrawer(),
+        appBar: const MainAppBar(title: "wZlot"),
+        drawer: const MainDrawer(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -71,12 +75,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: _showAnimation
-                          ? BouncingImage()
+                          ? const BouncingImage()
                           : Image.asset("images\\fire.png"),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: _showAnimation ? BlinkingSparkles() : Container(),
+                      child: _showAnimation
+                          ? const BlinkingSparkles()
+                          : Container(),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,

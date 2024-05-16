@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class BouncingImage extends StatefulWidget {
+  const BouncingImage({super.key});
+
   @override
   _BouncingImageState createState() => _BouncingImageState();
 }
@@ -38,6 +40,8 @@ class _BouncingImageState extends State<BouncingImage> with SingleTickerProvider
 }
 
 class BlinkingSparkles extends StatefulWidget {
+  const BlinkingSparkles({super.key});
+
   @override
   _BlinkingSparklesState createState() => _BlinkingSparklesState();
 }
