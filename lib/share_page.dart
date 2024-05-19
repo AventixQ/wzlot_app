@@ -73,11 +73,18 @@ class _CameraAppState extends State<CameraApp> {
     return Scaffold(
       body: Stack(children: [
         Container(
-          height: 600.0,
+          height: 520.0,
           child: CameraPreview(_controller),
         ),
-        Align(
-          child: Image.asset("images\\camera_photo.png"),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              "images\\camera_photo.png",
+              height: 580.0,
+              ),
+          ),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -151,8 +158,22 @@ class _ImagePreviewState extends State<ImagePreview> {
     return Scaffold(
         appBar: MainAppBar(title: "Pochal się gdzie jesteś!"),
         drawer: MainDrawer(),
-        body: Center(
-          child: Image.file(picture),
-        ));
+        body: Stack(
+          children: <Widget>[
+            Center(
+              child: Image.file(picture),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 85.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  "images\\camera_photo.png",
+                  height: 550.0,
+                  ),
+              ),
+            ),
+          ],
+        ),);
   }
 }
