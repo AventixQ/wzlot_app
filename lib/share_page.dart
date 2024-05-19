@@ -26,10 +26,12 @@ class CameraApp extends StatefulWidget {
 
 class _CameraAppState extends State<CameraApp> {
   late CameraController _controller;
+  int selectedCameraIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(cameras[0], ResolutionPreset.max);
+    _controller = CameraController(cameras[selectedCameraIndex], ResolutionPreset.max);
     _controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -49,17 +51,33 @@ class _CameraAppState extends State<CameraApp> {
     });
   }
 
+  void onSwitchCamera() {
+    selectedCameraIndex = selectedCameraIndex < cameras.length - 1 ? selectedCameraIndex + 1 : 0;
+    CameraController newController = CameraController(
+      cameras[selectedCameraIndex],
+      ResolutionPreset.max,
+    );
+
+    newController.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _controller = newController;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
         Container(
-          height: double.infinity,
+          height: 600.0,
           child: CameraPreview(_controller),
         ),
         Align(
-          child: Image.asset(
-                          "images\\camera_photo.png"),
+          child: Image.asset("images\\camera_photo.png"),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -68,32 +86,46 @@ class _CameraAppState extends State<CameraApp> {
             Center(
               child: Container(
                 margin: EdgeInsets.only(bottom: 13.0),
-                child: MaterialButton(
-                  onPressed: () async {
-                    if (!_controller.value.isInitialized) {
-                      return null;
-                    }
-                    if (_controller.value.isTakingPicture) {
-                      return null;
-                    }
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MaterialButton(
+                      onPressed: () async {
+                        if (!_controller.value.isInitialized) {
+                          return null;
+                        }
+                        if (_controller.value.isTakingPicture) {
+                          return null;
+                        }
 
-                    try {
-                      await _controller.setFlashMode(FlashMode.auto);
-                      XFile picture = await _controller.takePicture();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ImagePreview(picture)));
-                    } on CameraException catch (e) {
-                      debugPrint("Error : $e");
-                      return null;
-                    }
-                  },
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: 40.0,
-                    color: Colors.white,
-                  ),
+                        try {
+                          await _controller.setFlashMode(FlashMode.auto);
+                          XFile picture = await _controller.takePicture();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ImagePreview(picture)));
+                        } on CameraException catch (e) {
+                          debugPrint("Error : $e");
+                          return null;
+                        }
+                      },
+                      child: Icon(
+                        Icons.camera_alt,
+                        size: 40.0,
+                        color: Colors.orange,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    MaterialButton(
+                      onPressed: onSwitchCamera,
+                      child: Icon(
+                        Icons.switch_camera,
+                        size: 40.0,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -103,6 +135,7 @@ class _CameraAppState extends State<CameraApp> {
     );
   }
 }
+
 
 class ImagePreview extends StatefulWidget {
   ImagePreview(this.file, {super.key});
