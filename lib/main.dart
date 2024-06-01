@@ -1,14 +1,20 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:w_zlot/app_bar.dart';
-import 'package:w_zlot/drawer.dart';
-import 'package:w_zlot/fire_animation.dart';
+import 'package:wZlot/app_bar.dart';
+import 'package:wZlot/drawer.dart';
+import 'package:wZlot/fire_animation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 late List<CameraDescription> cameras;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   runApp(const MyApp());
+
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:w_zlot/history_page.dart';
-import 'package:w_zlot/map_page.dart';
-import 'package:w_zlot/timetable_page.dart';
-import 'package:w_zlot/registration_page.dart';
-import 'package:w_zlot/login_page.dart';
-import 'package:w_zlot/share_page.dart';
-import 'package:w_zlot/teams_page.dart';
-import 'package:w_zlot/organizers_page.dart';
-import 'package:w_zlot/main.dart';
+import 'package:wZlot/history_page.dart';
+import 'package:wZlot/map_page.dart';
+import 'package:wZlot/timetable_page.dart';
+import 'package:wZlot/registration_page.dart';
+import 'package:wZlot/login_page.dart';
+import 'package:wZlot/share_page.dart';
+import 'package:wZlot/teams_page.dart';
+import 'package:wZlot/organizers_page.dart';
+import 'package:wZlot/main.dart';
 
 void navigateWithAnimation(BuildContext context, Widget destination) {
   Navigator.push(
@@ -55,6 +55,13 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            title: const Text('Zaloguj się'),
+            onTap: () {
+              navigateWithAnimation(context, const LoginPage()
+              );
+            },
+          ),
+          ListTile(
             title: const Text('Strona główna'),
             onTap: () {
               navigateWithAnimation(context, const MyHomePage(title: "Strona główna")
@@ -85,7 +92,7 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Zapisz się na swoje zajęcia'),
             onTap: () {
-              navigateWithAnimation(context, const LoginPage()
+              navigateWithAnimation(context, const RegistrationPage()
               );
             },
           ),

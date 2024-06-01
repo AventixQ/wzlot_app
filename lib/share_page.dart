@@ -3,10 +3,10 @@ import 'package:image/image.dart' as img;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:w_zlot/app_bar.dart';
-import 'package:w_zlot/drawer.dart';
+import 'package:wZlot/app_bar.dart';
+import 'package:wZlot/drawer.dart';
 import 'package:camera/camera.dart';
-import 'package:w_zlot/main.dart';
+import 'package:wZlot/main.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:share_plus/share_plus.dart';
 

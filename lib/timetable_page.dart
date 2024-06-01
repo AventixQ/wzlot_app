@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:w_zlot/app_bar.dart';
-import 'package:w_zlot/drawer.dart';
+import 'package:wZlot/app_bar.dart';
+import 'package:wZlot/drawer.dart';
 
 class TimetablePage extends StatelessWidget {
   const TimetablePage({super.key});

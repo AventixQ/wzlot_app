@@ -1,6 +1,8 @@
-import 'package:w_zlot/app_bar.dart';
-import 'package:w_zlot/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wZlot/app_bar.dart';
+import 'package:wZlot/drawer.dart';
+import 'logout_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,31 +12,56 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   String? _errorMessage;
 
-  void _login() {
-    // Tutaj dodaj logikę autoryzacji, na przykład za pomocą Firebase Authentication
-    // Po udanym logowaniu przekieruj użytkownika na inną stronę
+  @override
+  void initState() {
+    super.initState();
+    // Sprawdź, czy użytkownik jest zalogowany podczas inicjalizacji strony
+    checkLoginStatus();
+  }
 
-    // Przykład walidacji (tylko dla demonstracji)
-    if (_loginController.text.isEmpty || _passwordController.text.isEmpty) {
-      setState(() {
-        _errorMessage = 'Proszę wprowadzić adres login i hasło.';
-      });
-      return;
+  Future<void> checkLoginStatus() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Jeśli użytkownik jest zalogowany, przejdź od razu do strony wylogowania
+      navigateWithAnimation(context, const LogoutPage());
     }
+  }
 
-    // Tutaj możesz wywołać funkcję logowania
-    // np. _authenticateUser(_loginController.text, _passwordController.text);
+  Future<void> _login() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      navigateWithAnimation(context, const LogoutPage());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        setState(() {
+          _errorMessage =
+              'Nie znaleziono użytkownika dla podanego adresu e-mail.';
+        });
+      } else if (e.code == 'wrong-password') {
+        setState(() {
+          _errorMessage = 'Nieprawidłowe hasło.';
+        });
+      } else {
+        setState(() {
+          _errorMessage = 'Wystąpił błąd podczas logowania: ${e.message}';
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: "Formularz rejestracyjny"),
+      appBar: MainAppBar(title: "Logowanie"),
       drawer: MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -46,9 +73,10 @@ class _LoginPageState extends State<LoginPage> {
               Text(
                 _errorMessage!,
                 style: TextStyle(color: Colors.red),
+                textAlign: TextAlign.center,
               ),
             TextFormField(
-              controller: _loginController,
+              controller: _emailController,
               decoration: InputDecoration(labelText: 'Login'),
             ),
             TextFormField(
