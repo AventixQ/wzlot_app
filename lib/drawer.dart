@@ -3,6 +3,7 @@ import 'package:w_zlot/history_page.dart';
 import 'package:w_zlot/map_page.dart';
 import 'package:w_zlot/timetable_page.dart';
 import 'package:w_zlot/registration_page.dart';
+import 'package:w_zlot/login_page.dart';
 import 'package:w_zlot/share_page.dart';
 import 'package:w_zlot/teams_page.dart';
 import 'package:w_zlot/organizers_page.dart';
@@ -84,7 +85,7 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Zapisz się na swoje zajęcia'),
             onTap: () {
-              navigateWithAnimation(context, const RegistrationPage()
+              navigateWithAnimation(context, const LoginPage()
               );
             },
           ),
