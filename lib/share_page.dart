@@ -7,6 +7,8 @@ import 'package:w_zlot/app_bar.dart';
 import 'package:w_zlot/drawer.dart';
 import 'package:camera/camera.dart';
 import 'package:w_zlot/main.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+
 
 class SharePage extends StatelessWidget {
   const SharePage({super.key});
@@ -210,6 +212,14 @@ class _ImagePreviewState extends State<ImagePreview> {
     }
   }
 
+    Future<void> _saveImageToGallery() async {
+      if (_mergedImage != null) {
+        await GallerySaver.saveImage(_mergedImage!.path);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Image saved to gallery')));
+      }
+    }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -218,10 +228,38 @@ class _ImagePreviewState extends State<ImagePreview> {
       body: Center(
         child: _isLoading
             ? CircularProgressIndicator()
-            : _mergedImage != null
-                ? Image.file(_mergedImage!)
-                : Text('Błąd w generowaniu zdjęcia, spróbuj ponownie'),
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (_mergedImage != null) Image.file(_mergedImage!),
+                ],
+              ),
       ),
+      bottomNavigationBar: _isLoading
+          ? null
+          : BottomAppBar(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.camera_alt, size: 40, color: Colors.orange),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.download, size: 40, color: Colors.orange),
+                    onPressed: _saveImageToGallery,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.share, size: 40, color: Colors.orange),
+                    onPressed: () {
+                      // Implement share functionality here
+                    },
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }
