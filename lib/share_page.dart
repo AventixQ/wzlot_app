@@ -1,6 +1,8 @@
 import 'dart:io';
-
+import 'package:image/image.dart' as img;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:w_zlot/app_bar.dart';
 import 'package:w_zlot/drawer.dart';
 import 'package:camera/camera.dart';
@@ -73,7 +75,7 @@ class _CameraAppState extends State<CameraApp> {
     return Scaffold(
       body: Stack(children: [
         Container(
-          height: 520.0,
+          height: 500.0,
           child: CameraPreview(_controller),
         ),
         Padding(
@@ -82,7 +84,8 @@ class _CameraAppState extends State<CameraApp> {
             alignment: Alignment.topCenter,
             child: Image.asset(
               "images\\camera_photo.png",
-              height: 580.0,
+              height: 490.0,
+              width: 345.0,
               ),
           ),
         ),
@@ -143,37 +146,82 @@ class _CameraAppState extends State<CameraApp> {
   }
 }
 
-
 class ImagePreview extends StatefulWidget {
   ImagePreview(this.file, {super.key});
-  XFile file;
+  final XFile file;
+
   @override
   State<ImagePreview> createState() => _ImagePreviewState();
 }
 
 class _ImagePreviewState extends State<ImagePreview> {
+  File? _mergedImage;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _mergeImages();
+  }
+
+  Future<void> _mergeImages() async {
+    try {
+      print('Reading');
+      final imageBytes = await widget.file.readAsBytes();
+      final img.Image? photo = img.decodeImage(imageBytes);
+      if (photo == null) {
+        throw Exception('Failed to decode photo');
+      }
+      print('Decoded successfully');
+
+      print('Reading');
+      final frameBytes = await rootBundle.load('images/camera_photo.png');
+      final img.Image? frame = img.decodeImage(frameBytes.buffer.asUint8List());
+      if (frame == null) {
+        throw Exception('Failed to decode frame');
+      }
+      print('Decoded successfully');
+
+      print('Calculating offsets');
+      final int offsetX = (photo.width - frame.width) ~/ 2;
+      final int offsetY = (photo.height - frame.height) ~/ 2;
+      print('Offsets calculated: offsetX = $offsetX, offsetY = $offsetY');
+
+      print('Merging images');
+      final img.Image mergedImage = img.copyInto(photo, frame, dstX: offsetX, dstY: offsetY, blend: true);
+      print('Images merged successfully');
+
+      print('Saving merged image...');
+      final directory = await getApplicationDocumentsDirectory();
+      final mergedImagePath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}_merged.png';
+      final mergedFile = File(mergedImagePath);
+      await mergedFile.writeAsBytes(img.encodePng(mergedImage));
+      print('Merged image saved at $mergedImagePath');
+
+      setState(() {
+        _mergedImage = mergedFile;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error during image merging: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    File picture = File(widget.file.path);
     return Scaffold(
-        appBar: MainAppBar(title: "Pochal się gdzie jesteś!"),
-        drawer: MainDrawer(),
-        body: Stack(
-          children: <Widget>[
-            Center(
-              child: Image.file(picture),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 85.0),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Image.asset(
-                  "images\\camera_photo.png",
-                  height: 550.0,
-                  ),
-              ),
-            ),
-          ],
-        ),);
+      appBar: MainAppBar(title: "Pochwal się gdzie jesteś!"),
+      drawer: MainDrawer(),
+      body: Center(
+        child: _isLoading
+            ? CircularProgressIndicator()
+            : _mergedImage != null
+                ? Image.file(_mergedImage!)
+                : Text('Błąd w generowaniu zdjęcia, spróbuj ponownie'),
+      ),
+    );
   }
 }
