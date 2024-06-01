@@ -8,6 +8,7 @@ import 'package:w_zlot/drawer.dart';
 import 'package:camera/camera.dart';
 import 'package:w_zlot/main.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:share_plus/share_plus.dart';
 
 
 class SharePage extends StatelessWidget {
@@ -219,6 +220,13 @@ class _ImagePreviewState extends State<ImagePreview> {
       }
     }
 
+    Future<void> _shareImage() async{
+      if (_mergedImage != null) {
+        Share.shareFiles([_mergedImage!.path]);
+      }
+    }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -253,9 +261,7 @@ class _ImagePreviewState extends State<ImagePreview> {
                   ),
                   IconButton(
                     icon: Icon(Icons.share, size: 40, color: Colors.orange),
-                    onPressed: () {
-                      // Implement share functionality here
-                    },
+                    onPressed: _shareImage,
                   ),
                 ],
               ),
