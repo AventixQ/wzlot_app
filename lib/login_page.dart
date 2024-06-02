@@ -20,14 +20,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    // Sprawdź, czy użytkownik jest zalogowany podczas inicjalizacji strony
     checkLoginStatus();
   }
 
   Future<void> checkLoginStatus() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Jeśli użytkownik jest zalogowany, przejdź od razu do strony wylogowania
       navigateWithAnimation(context, const LogoutPage());
     }
   }
