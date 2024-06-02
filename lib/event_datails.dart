@@ -14,7 +14,6 @@ class EventDetailsPage extends StatelessWidget {
     bool isEventFull = event['curr_part'] >= event['max_part'];
     final String? username = StringEvents.removeSpecialCharacters(user?.email);
     final String eventName = event['name'];
-
     return Scaffold(
       appBar: AppBar(
         title: Text(event['name']),
@@ -77,6 +76,7 @@ class EventDetailsPage extends StatelessWidget {
                         selectedEvents =
                             StringEvents.add(selectedEvents, eventName);
                         event.update('curr_part', (value) => value + 1);
+                        
                         databaseReference.update(
                             {'selected_events': selectedEvents}).then((_) {
                           ScaffoldMessenger.of(context)
@@ -105,5 +105,6 @@ class EventDetailsPage extends StatelessWidget {
         ),
       ),
     );
+    
   }
 }
