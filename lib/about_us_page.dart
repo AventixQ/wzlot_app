@@ -30,6 +30,13 @@ class HistoryPage extends StatelessWidget {
                 'Program tegorocznej edycji wZlotu będzie, poza rozwijaniem pasji, popularyzować wśród wędrowników odkrywanie nowych ścieżek kariery i rozowju.',
                 style: TextStyle(fontSize: 16),
               ),
+              /*Center(
+                child: Image.asset(
+                  "images\\2024.gif",
+                  height: 125.0,
+                  width: 125.0,
+                ),
+              ),*/
               const SizedBox(height: 20),
               const Text(
                 'Komenda wZlotu:',
@@ -166,7 +173,7 @@ class HistoryPage extends StatelessWidget {
               child: Text(
                 email,
                 style: const TextStyle(color: Colors.deepOrange,
-          fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold),
               ),
             ),
           ],

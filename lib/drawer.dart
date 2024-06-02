@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:wZlot/contact_page.dart';
 import 'package:wZlot/about_us_page.dart';
-import 'package:wZlot/map_page.dart';
+//import 'package:wZlot/map_page.dart';
 import 'package:wZlot/timetable_page.dart';
 import 'package:wZlot/registration_page.dart';
 import 'package:wZlot/login_page.dart';
 import 'package:wZlot/share_page.dart';
-import 'package:wZlot/teams_page.dart';
+//import 'package:wZlot/teams_page.dart';
 import 'package:wZlot/main.dart';
 
 void navigateWithAnimation(BuildContext context, Widget destination) {
@@ -45,16 +46,31 @@ class MainDrawer extends StatelessWidget {
             child: ListView(
               //padding: EdgeInsets.zero,
               children: <Widget>[
-                const SizedBox(
+                SizedBox(
                 height: 64,
-                child: DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.orangeAccent,
-                  ),
-                  child: Text(
-                    'Menu',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                child: SizedBox(
+                  height: 64,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.orangeAccent,
+                    ),
+                    child: Row(
+                      children: [
+                        new SvgPicture.asset(
+                          r'icons\logo.svg',
+                          height: 50.0,
+                          width: 50.0,
+                          allowDrawingOutsideViewBox: true,
+                        ),
+                        
+                        SizedBox(width: 10), // Margines między ikoną a tekstem
+                        Text(
+                          'Menu',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),),
