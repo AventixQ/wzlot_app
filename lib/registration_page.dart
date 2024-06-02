@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wZlot/app_bar.dart';
 import 'package:wZlot/drawer.dart';
 import 'package:wZlot/event_datails.dart';
 import 'package:wZlot/timetable_page.dart';
@@ -15,9 +16,8 @@ class RegistrationPage extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Twoje zajęcia'),
-      ),
+      appBar: const MainAppBar(title: "Twoje zajęcia"),
+      drawer: const MainDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,7 @@ class RegistrationPage extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    'Zaloguj się, aby zarejestrować się na zajęcia.',
+                    'Zaloguj się, aby przeglądać swoje zajęcia.',
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
@@ -49,12 +49,17 @@ class RegistrationPage extends StatelessWidget {
                   future: fetchUserEvents(user),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const SizedBox(
+                        height: 100,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
                     } else if (snapshot.hasError) {
                       print(snapshot.error);
                       return Text('Wystąpił błąd: ${snapshot.error}');
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Text('Brak wydarzeń użytkownika.');
+                      return Text('Jeszcze nie zapisałeś się na żadne zajęcia.');
                     } else {
                       final events = snapshot.data!;
                       return ListView.builder(
@@ -88,6 +93,7 @@ class RegistrationPage extends StatelessWidget {
                 },
                 child: Text('Przejdź do harmonogramu'),
               ),
+            SizedBox(height: 20),
           ],
         ),
       ),

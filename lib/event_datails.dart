@@ -22,7 +22,7 @@ class EventDetailsPage extends StatelessWidget {
       body: FutureBuilder<DatabaseEvent>(
         future: username != null
             ? FirebaseDatabase.instance.ref().child('users/$username').once()
-            : Future.value(),
+            : null,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

@@ -216,7 +216,7 @@ class _ImagePreviewState extends State<ImagePreview> {
     Future<void> _saveImageToGallery() async {
       if (_mergedImage != null) {
         await GallerySaver.saveImage(_mergedImage!.path);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Image saved to gallery')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Zapisano obraz do galerii telefonu.')));
       }
     }
 
