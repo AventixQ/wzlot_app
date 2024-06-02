@@ -20,6 +20,7 @@ class StringEvents {
     } else {
       List<String> elements = string!.split(';');
       elements.remove(elementToRemove);
+      if (elements.join(';') == "") return "0";
       return elements.join(';');
     }
   }

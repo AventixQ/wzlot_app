@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wZlot/drawer.dart';
 import 'package:wZlot/event_datails.dart';
-import 'package:wZlot/schedule_page.dart';
+import 'package:wZlot/timetable_page.dart';
 import 'login_page.dart';
 import 'package:wZlot/string_events.dart';
 
@@ -49,8 +49,9 @@ class RegistrationPage extends StatelessWidget {
                   future: fetchUserEvents(user),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // Wyświetl spinner podczas ładowania danych.
+                      return CircularProgressIndicator();
                     } else if (snapshot.hasError) {
+                      print(snapshot.error);
                       return Text('Wystąpił błąd: ${snapshot.error}');
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return Text('Brak wydarzeń użytkownika.');
@@ -67,7 +68,8 @@ class RegistrationPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => EventDetailsPage(event: event),
+                                  builder: (context) =>
+                                      EventDetailsPage(event: event),
                                 ),
                               );
                             },
@@ -82,7 +84,7 @@ class RegistrationPage extends StatelessWidget {
             if (user != null)
               ElevatedButton(
                 onPressed: () {
-                  navigateWithAnimation(context, const SchedulePage());
+                  navigateWithAnimation(context, const TimetablePage());
                 },
                 child: Text('Przejdź do harmonogramu'),
               ),
@@ -98,7 +100,6 @@ class RegistrationPage extends StatelessWidget {
       return [];
     }
 
-    // Fetch the user's selected event IDs
     final userDatabaseReference =
         FirebaseDatabase.instance.ref().child('users/$username');
     final DatabaseEvent userEvent = await userDatabaseReference.once();
@@ -107,12 +108,12 @@ class RegistrationPage extends StatelessWidget {
     if (selectedEvents == null || selectedEvents.isEmpty) {
       return [];
     }
-    
+
     List<String> eventIds = selectedEvents.split(';');
     List<Map<String, dynamic>> events = [];
 
-    // Fetch details of each selected event
-    final eventsDatabaseReference = FirebaseDatabase.instance.ref().child('events');
+    final eventsDatabaseReference =
+        FirebaseDatabase.instance.ref().child('events');
     for (String eventId in eventIds) {
       final eventSnapshot = await eventsDatabaseReference.child(eventId).once();
       final event = eventSnapshot.snapshot.value as Map<dynamic, dynamic>?;
@@ -120,7 +121,6 @@ class RegistrationPage extends StatelessWidget {
         events.add(event.cast<String, dynamic>());
       }
     }
-
     return events;
   }
 }
