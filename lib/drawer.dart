@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wZlot/history_page.dart';
 import 'package:wZlot/map_page.dart';
 import 'package:wZlot/timetable_page.dart';
@@ -30,93 +31,116 @@ void navigateWithAnimation(BuildContext context, Widget destination) {
   );
 }
 
-
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Drawer(
-      child: ListView(
-        //padding: EdgeInsets.zero,
+      child: Column(
         children: <Widget>[
-          const SizedBox(
-            height: 64,
-            child: DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.orangeAccent,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
+          Expanded(
+            child: ListView(
+              //padding: EdgeInsets.zero,
+              children: <Widget>[
+                const SizedBox(
+                height: 64,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.orangeAccent,
+                  ),
+                  child: Text(
+                    'Menu',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),),
+                ListTile(
+                  title: const Text('Strona główna'),
+                  onTap: () {
+                    navigateWithAnimation(context, const MyHomePage(title: "Strona główna"));
+                  },
                 ),
-              ),
+                ListTile(
+                  title: const Text('Historia wZlotu'),
+                  onTap: () {
+                    navigateWithAnimation(context, const HistoryPage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Mapa wydarzenia'),
+                  onTap: () {
+                    navigateWithAnimation(context, const MapPage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Harmonogram atrakcji'),
+                  onTap: () {
+                    navigateWithAnimation(context, const TimetablePage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Zapisz się na swoje zajęcia'),
+                  onTap: () {
+                    navigateWithAnimation(context, const RegistrationPage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Pochwal się znajomym!'),
+                  onTap: () {
+                    navigateWithAnimation(context, const SharePage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Poznaj inne drużyny'),
+                  onTap: () {
+                    navigateWithAnimation(context, const TeamsPage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Komenda wZlotu 2024'),
+                  onTap: () {
+                    navigateWithAnimation(context, const OrganizersPage());
+                  },
+                ),
+              ],
             ),
           ),
-          ListTile(
-            title: const Text('Zaloguj się'),
-            onTap: () {
-              navigateWithAnimation(context, const LoginPage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Strona główna'),
-            onTap: () {
-              navigateWithAnimation(context, const MyHomePage(title: "Strona główna")
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Historia wZlotu'),
-            onTap: () {
-              navigateWithAnimation(context, const HistoryPage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Mapa wydarzenia'),
-            onTap: () {
-              navigateWithAnimation(context, const MapPage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Harmonogram atrakcji'),
-            onTap: () {
-              navigateWithAnimation(context, const TimetablePage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Zapisz się na swoje zajęcia'),
-            onTap: () {
-              navigateWithAnimation(context, const RegistrationPage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Pochwal się znajomym!'),
-            onTap: () {
-              navigateWithAnimation(context, const SharePage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Poznaj inne drużyny'),
-            onTap: () {
-              navigateWithAnimation(context, const TeamsPage()
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Komenda wZlotu 2024'),
-            onTap: () {
-              navigateWithAnimation(context, const OrganizersPage()
-              );
-            },
-          ),
+          if (user == null)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  navigateWithAnimation(context, const LoginPage());
+                },
+                child: const Text('Zaloguj się'),
+              ),
+            ),
+          if (user != null)
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Użytkownik: ${user.email}'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => const MyHomePage(title: 'wZlot')),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    child: const Text('Wyloguj się'),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
