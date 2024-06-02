@@ -52,6 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '830086493481',
     projectId: 'wzlot-dfe43',
     authDomain: 'wzlot-dfe43.firebaseapp.com',
+    databaseURL: 'https://wzlot-dfe43-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wzlot-dfe43.appspot.com',
     measurementId: 'G-20NCB3D7CQ',
   );
@@ -61,6 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:830086493481:android:8f1afb6e6e92c763d63338',
     messagingSenderId: '830086493481',
     projectId: 'wzlot-dfe43',
+    databaseURL: 'https://wzlot-dfe43-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wzlot-dfe43.appspot.com',
   );
 
@@ -70,7 +72,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '830086493481',
     projectId: 'wzlot-dfe43',
     authDomain: 'wzlot-dfe43.firebaseapp.com',
+    databaseURL: 'https://wzlot-dfe43-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wzlot-dfe43.appspot.com',
     measurementId: 'G-8N4RQQ648C',
   );
+
 }

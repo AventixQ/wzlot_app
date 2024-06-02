@@ -76,12 +76,12 @@ class MainDrawer extends StatelessWidget {
                     navigateWithAnimation(context, const ContactPage());
                   },
                 ),
-                ListTile(
+                /*ListTile(
                   title: const Text('Mapa wydarzenia'),
                   onTap: () {
                     navigateWithAnimation(context, const MapPage());
                   },
-                ),
+                ),*/
                 ListTile(
                   title: const Text('Harmonogram atrakcji'),
                   onTap: () {
@@ -89,17 +89,17 @@ class MainDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  title: const Text('Zapisz się na swoje zajęcia'),
+                  title: const Text('Twoje zajęcia'),
                   onTap: () {
                     navigateWithAnimation(context, const RegistrationPage());
                   },
                 ),
-                ListTile(
+                /*ListTile(
                   title: const Text('Poznaj inne drużyny'),
                   onTap: () {
                     navigateWithAnimation(context, const TeamsPage());
                   },
-                ),
+                ),*/
                 ListTile(
                   title: const Text('Pochwal się znajomym!'),
                   onTap: () {

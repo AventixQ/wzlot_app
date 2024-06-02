@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wZlot/drawer.dart';
-import 'package:wZlot/scheadule_page.dart';
+import 'package:wZlot/schedule_page.dart';
 import 'login_page.dart';
 
 class RegistrationPage extends StatelessWidget {
