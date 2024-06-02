@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wZlot/contact_page.dart';
 import 'package:wZlot/history_page.dart';
 import 'package:wZlot/map_page.dart';
 import 'package:wZlot/timetable_page.dart';
@@ -7,7 +8,6 @@ import 'package:wZlot/registration_page.dart';
 import 'package:wZlot/login_page.dart';
 import 'package:wZlot/share_page.dart';
 import 'package:wZlot/teams_page.dart';
-import 'package:wZlot/organizers_page.dart';
 import 'package:wZlot/main.dart';
 
 void navigateWithAnimation(BuildContext context, Widget destination) {
@@ -65,9 +65,15 @@ class MainDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  title: const Text('Historia wZlotu'),
+                  title: const Text('O nas'),
                   onTap: () {
                     navigateWithAnimation(context, const HistoryPage());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Kontakt'),
+                  onTap: () {
+                    navigateWithAnimation(context, const ContactPage());
                   },
                 ),
                 ListTile(
@@ -89,21 +95,15 @@ class MainDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  title: const Text('Pochwal się znajomym!'),
-                  onTap: () {
-                    navigateWithAnimation(context, const SharePage());
-                  },
-                ),
-                ListTile(
                   title: const Text('Poznaj inne drużyny'),
                   onTap: () {
                     navigateWithAnimation(context, const TeamsPage());
                   },
                 ),
                 ListTile(
-                  title: const Text('Komenda wZlotu 2024'),
+                  title: const Text('Pochwal się znajomym!'),
                   onTap: () {
-                    navigateWithAnimation(context, const OrganizersPage());
+                    navigateWithAnimation(context, const SharePage());
                   },
                 ),
               ],
