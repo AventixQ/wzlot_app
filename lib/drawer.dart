@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wZlot/contact_page.dart';
-import 'package:wZlot/history_page.dart';
+import 'package:wZlot/about_us_page.dart';
 import 'package:wZlot/map_page.dart';
 import 'package:wZlot/timetable_page.dart';
 import 'package:wZlot/registration_page.dart';

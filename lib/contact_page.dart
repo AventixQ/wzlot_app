@@ -14,21 +14,20 @@ class ContactPage extends StatelessWidget {
       body: Column(
         
         children: [
-          Padding(padding: EdgeInsets.all(10.0),
+          const Padding(padding: EdgeInsets.all(10.0),
             child: Column(
             children: [
-              const Text(
+              Text(
                     'Jeżeli masz jakiekolwiek pytania do organizatorów, napisz do nas na maila lub poprzez fanpage na facebooku.',
-                    
                     style: TextStyle(fontSize: 16),
                   ),
-              const SizedBox(height: 20),
-              const Text(
+              SizedBox(height: 20),
+              Text(
                     'W pilnych sprawach skontaktuj się z biurem wZlotowym pod podanym numerem.',
                     style: TextStyle(fontSize: 16),
                   ),
-              const SizedBox(height: 20),
-              const Text(
+              SizedBox(height: 20),
+              Text(
                     'Zanim napiszesz maila, zerknij do naszego FAQ.',
                     style: TextStyle(fontSize: 16),
                   ),
@@ -38,8 +37,8 @@ class ContactPage extends StatelessWidget {
           
           _buildContactRow(
             icon: Icons.phone,
-            text: "+48 693 543 717",
-            onPressed: () => _launchURL('tel:+48693543717'),
+            text: "+48 123 456 789",
+            onPressed: () => _launchURL('tel:+48123456789'),
           ),
           _buildContactRow(
             icon: Icons.email,
@@ -61,6 +60,23 @@ class ContactPage extends StatelessWidget {
     );
   }
 
+  Widget _buildClickableText({
+    required String text,
+    required VoidCallback onPressed,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.deepOrange,
+          fontWeight: FontWeight.bold
+        ),
+      ),
+    );
+  }
+
   Widget _buildContactRow({
     required IconData icon,
     required String text,
@@ -75,10 +91,7 @@ class ContactPage extends StatelessWidget {
             onPressed: onPressed,
           ),
           SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(fontSize: 16),
-          ),
+          _buildClickableText(text: text, onPressed: onPressed),
         ],
       ),
     );

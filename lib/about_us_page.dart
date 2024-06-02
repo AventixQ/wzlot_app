@@ -165,7 +165,8 @@ class HistoryPage extends StatelessWidget {
               onTap: () => _launchURL('mailto:$email'),
               child: Text(
                 email,
-                style: const TextStyle(color: Colors.blue),
+                style: const TextStyle(color: Colors.deepOrange,
+          fontWeight: FontWeight.bold),
               ),
             ),
           ],
