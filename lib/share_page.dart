@@ -15,7 +15,7 @@ class SharePage extends StatelessWidget {
   const SharePage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         appBar: MainAppBar(title: "Pochwal się gdzie jesteś!"),
         drawer: MainDrawer(),
         body: CameraApp());
@@ -77,7 +77,7 @@ class _CameraAppState extends State<CameraApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        Container(
+        SizedBox(
           height: 500.0,
           child: CameraPreview(_controller),
         ),
@@ -98,7 +98,7 @@ class _CameraAppState extends State<CameraApp> {
           children: [
             Center(
               child: Container(
-                margin: EdgeInsets.only(bottom: 13.0),
+                margin: const EdgeInsets.only(bottom: 13.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -123,16 +123,16 @@ class _CameraAppState extends State<CameraApp> {
                           return null;
                         }
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.camera_alt,
                         size: 40.0,
                         color: Colors.orange,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     MaterialButton(
                       onPressed: onSwitchCamera,
-                      child: Icon(
+                      child: const Icon(
                         Icons.switch_camera,
                         size: 40.0,
                         color: Colors.orange,
@@ -150,7 +150,7 @@ class _CameraAppState extends State<CameraApp> {
 }
 
 class ImagePreview extends StatefulWidget {
-  ImagePreview(this.file, {super.key});
+  const ImagePreview(this.file, {super.key});
   final XFile file;
 
   @override
@@ -250,17 +250,17 @@ class _ImagePreviewState extends State<ImagePreview> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.camera_alt, size: 40, color: Colors.orange),
+                    icon: const Icon(Icons.camera_alt, size: 40, color: Colors.orange),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.download, size: 40, color: Colors.orange),
+                    icon: const Icon(Icons.download, size: 40, color: Colors.orange),
                     onPressed: _saveImageToGallery,
                   ),
                   IconButton(
-                    icon: Icon(Icons.share, size: 40, color: Colors.orange),
+                    icon: const Icon(Icons.share, size: 40, color: Colors.orange),
                     onPressed: _shareImage,
                   ),
                 ],
