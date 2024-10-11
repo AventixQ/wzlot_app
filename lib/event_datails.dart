@@ -19,9 +19,9 @@ class EventDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(event['name']),
       ),
-      body: FutureBuilder<DatabaseEvent>(
-        future: username != null
-            ? FirebaseDatabase.instance.ref().child('users/$username').once()
+      body: StreamBuilder<DatabaseEvent>(
+        stream: username != null
+            ? FirebaseDatabase.instance.ref().child('users/$username').onValue
             : null,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
