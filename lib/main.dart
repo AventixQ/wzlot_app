@@ -142,7 +142,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   }
 
   void _startTimer() {
-    final eventDate = DateTime.parse('2024-09-22 18:00:00Z');;
+    final eventDate = DateTime.parse('2025-03-30 18:00:00Z');;
     final now = DateTime.now();
     setState(() {
       _duration = eventDate.difference(now);

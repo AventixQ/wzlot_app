@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wZlot/app_bar.dart';
 import 'package:wZlot/drawer.dart';
 import 'logout_page.dart';
+import 'reset_password_page.dart'; // Dodajemy nową stronę do resetowania hasła
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -86,6 +87,22 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: _login,
               child: Text('Zaloguj'),
+            ),
+            SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResetPasswordPage()), // Przejście do nowej strony
+                );
+              },
+              child: Text(
+                'Zapomniałem hasła',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blue,
+                ),
+              ),
             ),
           ],
         ),
